@@ -98,25 +98,25 @@
     <!--</bean>-->
     <!--&lt;!&ndash; 数据库定时备份服务  end &ndash;&gt;-->
 
-    <!--&lt;!&ndash;druid&ndash;&gt; 11111111111111111111111111111111-->
-    <!--<bean id="druid-stat-interceptor"-->
-          <!--class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">-->
-    <!--</bean>-->
-    <!--<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"-->
-          <!--scope="prototype">-->
-        <!--<property name="patterns">-->
-            <!--<list>-->
-                <!--<value>com.lb.service.*</value>-->
-                <!--<value>com.lb.mapper.*</value>-->
-            <!--</list>-->
-        <!--</property>-->
-    <!--</bean>-->
-    <!--<aop:config>-->
-        <!--&lt;!&ndash;pointcut-ref="druid-stat-pointcut"在idea中报Cannot resolve Spring Pointcut ‘druid-stat-pointcut‘  不用管它&ndash;&gt;-->
-        <!--<aop:advisor advice-ref="druid-stat-interceptor"-->
-                     <!--pointcut-ref="druid-stat-pointcut"/>-->
-    <!--</aop:config>-->
-    <!--&lt;!&ndash;druid end&ndash;&gt;-->
+    <!--配置druid监控spring jdbc start-->
+    <bean id="druid-stat-interceptor"
+          class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">
+    </bean>
+    <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
+          scope="prototype">
+        <property name="patterns">
+            <list>
+                <value>com.lb.service.*</value>
+                <value>com.lb.mapper.*</value>
+            </list>
+        </property>
+    </bean>
+    <aop:config>
+        <!--pointcut-ref="druid-stat-pointcut"在idea中报Cannot resolve Spring Pointcut ‘druid-stat-pointcut‘  不用管它-->
+        <aop:advisor advice-ref="druid-stat-interceptor"
+                     pointcut-ref="druid-stat-pointcut"/>
+    </aop:config>
+    <!--配置druid监控spring jdbc end-->
 
     <!--&lt;!&ndash;ehcache start&ndash;&gt;  111111111111111111111111111-->
     <!--&lt;!&ndash; myCache 操作对象 &ndash;&gt;-->

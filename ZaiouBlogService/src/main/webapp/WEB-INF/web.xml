@@ -10,32 +10,27 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-  <!--&lt;!&ndash;Spring获取项目路径&ndash;&gt; 11111111111111111111111111-->
-  <!--<context-param>-->
-    <!--<param-name>webAppRootKey</param-name>-->
-    <!--<param-value>zaioublog.path</param-value>-->
-  <!--</context-param>-->
-  <!--<listener>-->
-    <!--<listener-class>org.springframework.web.util.WebAppRootListener</listener-class>-->
-  <!--</listener>-->
+  <!--Spring获取项目路径-->
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>zaioublog.path</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
+  </listener>
   <!-- spring监听器 -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-  <!--Spring自定义监听器，用来记录服务器IP-->
+  <!--&lt;!&ndash;Spring自定义监听器，用来记录服务器IP&ndash;&gt;-->
   <!--<listener> 111111-->
-    <!--<listener-class>com.myblog.listener.CustomListener</listener-class>-->
+    <!--<listener-class>com.lb.listener.CustomListener</listener-class>-->
   <!--</listener>-->
   <!-- spring配置文件 -->
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:applicationContext.xml</param-value>
   </context-param>
-
-  <!-- 添加获取博主信息的监听器 222222-->
-  <!--<listener>-->
-  <!--<listener-class>ssm.blog.listener.InitBloggerData</listener-class>-->
-  <!--</listener>-->
 
   <!-- 添加springmvc支持 -->
   <servlet>
@@ -48,6 +43,11 @@
     <load-on-startup>1</load-on-startup>
     <async-supported>true</async-supported>
   </servlet>
+  <!--集成Restful,对所有的Action请求路径开放-->
+  <servlet-mapping>
+    <servlet-name>springMVC</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
   <!--<servlet-mapping>-->
     <!--<servlet-name>springMVC</servlet-name>-->
     <!--<url-pattern>*.do</url-pattern>-->
@@ -60,43 +60,39 @@
     <!--<servlet-name>springMVC</servlet-name>-->
     <!--<url-pattern>*.ws</url-pattern>-->
   <!--</servlet-mapping>-->
-  <!--集成Restful,对所有的Action请求路径开放-->
+
+  <!--阿里巴巴druid监控-->
+  <servlet>
+    <servlet-name>DruidStatView</servlet-name>
+    <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+    <init-param>
+      <!-- 用户名 -->
+      <param-name>loginUsername</param-name>
+      <param-value>root</param-value>
+    </init-param>
+    <init-param>
+      <!-- 密码 -->
+      <param-name>loginPassword</param-name>
+      <param-value>root</param-value>
+    </init-param>
+  </servlet>
   <servlet-mapping>
-    <servlet-name>springMVC</servlet-name>
-    <url-pattern>/</url-pattern>
+    <servlet-name>DruidStatView</servlet-name>
+    <url-pattern>/druid/*</url-pattern>
   </servlet-mapping>
-  <!--&lt;!&ndash;阿里巴巴druid监控&ndash;&gt; 111111111111-->
-  <!--<servlet>-->
-    <!--<servlet-name>DruidStatView</servlet-name>-->
-    <!--<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>-->
-    <!--<init-param>-->
-      <!--&lt;!&ndash; 用户名 &ndash;&gt;-->
-      <!--<param-name>loginUsername</param-name>-->
-      <!--<param-value>root</param-value>-->
-    <!--</init-param>-->
-    <!--<init-param>-->
-      <!--&lt;!&ndash; 密码 &ndash;&gt;-->
-      <!--<param-name>loginPassword</param-name>-->
-      <!--<param-value>helloroot</param-value>-->
-    <!--</init-param>-->
-  <!--</servlet>-->
-  <!--<servlet-mapping>-->
-    <!--<servlet-name>DruidStatView</servlet-name>-->
-    <!--<url-pattern>/druid/*</url-pattern>-->
-  <!--</servlet-mapping>-->
-  <!--&lt;!&ndash;druid的URI监控&ndash;&gt;-->
-  <!--<filter>-->
-    <!--<filter-name>DruidWebStatFilter</filter-name>-->
-    <!--<filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>-->
-    <!--<init-param>-->
-      <!--<param-name>exclusions</param-name>-->
-      <!--<param-value>*.js,*.gif,*.woff2,*.eot,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>-->
-    <!--</init-param>-->
-  <!--</filter>-->
-  <!--<filter-mapping>-->
-    <!--<filter-name>DruidWebStatFilter</filter-name>-->
-    <!--<url-pattern>/*</url-pattern>-->
-  <!--</filter-mapping>-->
+  <!--druid的URI监控-->
+  <filter>
+    <filter-name>DruidWebStatFilter</filter-name>
+    <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
+    <init-param>
+      <param-name>exclusions</param-name>
+      <param-value>*.js,*.gif,*.woff2,*.eot,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>DruidWebStatFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 
   <!--添加shiro过滤器 222222 -->
   <!--<filter>-->
@@ -141,17 +137,17 @@
   <!--<url-pattern>*.jsp</url-pattern>-->
   <!--</filter-mapping>-->
 
-  <!--缓存 111111-->
-  <!--<filter>-->
-    <!--<filter-name>cacheControlFilter</filter-name>-->
-    <!--<filter-class>com.myblog.filter.CacheControlFilter</filter-class>-->
-  <!--</filter>-->
-  <!--<filter-mapping>-->
-    <!--<filter-name>cacheControlFilter</filter-name>-->
-    <!--<url-pattern>/*</url-pattern>-->
-  <!--</filter-mapping>-->
+  <!--防止浏览器缓存页面或请求结果-->
+  <filter>
+    <filter-name>cacheControlFilter</filter-name>
+    <filter-class>com.lb.filter.CacheControlFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>cacheControlFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 
-  <!--&lt;!&ndash;spring session&ndash;&gt; 11111111111111111111111111111-->
+  <!--&lt;!&ndash;spring session&ndash;&gt; 111111111111-->
   <!--&lt;!&ndash;放前面的话，搜索的字符编码会有问题&ndash;&gt;-->
   <!--<filter>-->
     <!--<filter-name>springSessionRepositoryFilter</filter-name>-->
