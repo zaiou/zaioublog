@@ -10,5 +10,5 @@ import org.springframework.stereotype.Service;
  * @Modified by:
  */
 public interface TestService {
-    Admin find();
+    Admin find(Integer id);
 }

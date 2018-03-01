@@ -18,7 +18,7 @@ public class TestServiceImpl implements TestService {
     private AdminMapper adminMapper;
 
     @Override
-    public Admin find() {
-        return adminMapper.selectByPrimaryKey(1);
+    public Admin find(Integer id) {
+        return adminMapper.selectByPrimaryKey(id);
     }
 }

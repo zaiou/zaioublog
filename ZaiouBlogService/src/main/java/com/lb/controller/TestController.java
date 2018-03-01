@@ -6,7 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -16,16 +18,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Modified by:
  */
 @Controller
-@RequestMapping(value = "/test")
 public class TestController {
     private final static Logger logger = LoggerFactory.getLogger(TestController.class);
     @Autowired
     private  TestService testService;
 
-    @RequestMapping(value = "/find")
+    @RequestMapping(value = "/test/{id}",method = RequestMethod.GET)
     @ResponseBody
-    public Admin find(){
+    public Admin find(@PathVariable Integer id){
+        logger.info("测试restful风格接受参数"+id);
         logger.info("添加日志测试");
-        return  testService.find();
+        return  testService.find(id);
     }
 }

@@ -48,17 +48,22 @@
     <load-on-startup>1</load-on-startup>
     <async-supported>true</async-supported>
   </servlet>
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>springMVC</servlet-name>-->
+    <!--<url-pattern>*.do</url-pattern>-->
+  <!--</servlet-mapping>-->
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>springMVC</servlet-name>-->
+    <!--<url-pattern>*.html</url-pattern> &lt;!&ndash; 伪静态 &ndash;&gt;-->
+  <!--</servlet-mapping>-->
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>springMVC</servlet-name>-->
+    <!--<url-pattern>*.ws</url-pattern>-->
+  <!--</servlet-mapping>-->
+  <!--集成Restful,对所有的Action请求路径开放-->
   <servlet-mapping>
     <servlet-name>springMVC</servlet-name>
-    <url-pattern>*.do</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>springMVC</servlet-name>
-    <url-pattern>*.html</url-pattern> <!-- 伪静态 -->
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>springMVC</servlet-name>
-    <url-pattern>*.ws</url-pattern>
+    <url-pattern>/</url-pattern>
   </servlet-mapping>
   <!--&lt;!&ndash;阿里巴巴druid监控&ndash;&gt; 111111111111-->
   <!--<servlet>-->
