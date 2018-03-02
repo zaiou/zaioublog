@@ -161,13 +161,6 @@
     </bean>
     <!-- 多缓存配置结束 -->
 
-
-    <!-- 事务管理（transaction manager） -->
-    <bean id="transactionManager"
-          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-
     <!-- Default bean name is 'mongo' 2222222222222222222222 -->
     <!--<mongo:db-factory id="mongoDbFactory"-->
     <!--host="${mongo.host}"-->
@@ -257,34 +250,40 @@
         <property name="maxInactiveIntervalInSeconds" value="1800"/>
     </bean>
 
+    <!-- 事务管理管理器（transaction manager） -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
-    <!--&lt;!&ndash; 配置事务通知属性 &ndash;&gt;  111111111111111111111111111-->
-    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
-        <!--&lt;!&ndash; 定义事务传播属性 &ndash;&gt;-->
-        <!--<tx:attributes>-->
-            <!--<tx:method name="insert*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="update*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="edit*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="save*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="add*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="new*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="set*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="remove*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="delete*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="change*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="check*" propagation="REQUIRED"/>-->
-            <!--&lt;!&ndash;<tx:method name="get*" propagation="REQUIRED" read-only="true"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<tx:method name="find*" propagation="REQUIRED" read-only="true"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<tx:method name="load*" propagation="REQUIRED" read-only="true"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<tx:method name="*" propagation="REQUIRED" read-only="true"/>&ndash;&gt;-->
-        <!--</tx:attributes>-->
-    <!--</tx:advice>-->
+    <!-- 配置事务通知属性 对@Transactional这个注解进行的驱动-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <!-- 定义事务传播属性 -->
+        <tx:attributes>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="edit*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="new*" propagation="REQUIRED"/>
+            <tx:method name="set*" propagation="REQUIRED"/>
+            <tx:method name="remove*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="change*" propagation="REQUIRED"/>
+            <tx:method name="check*" propagation="REQUIRED"/>
+            <tx:method name="get*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="find*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="load*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="*" propagation="REQUIRED" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
 
-    <!--&lt;!&ndash; 配置事务切面 &ndash;&gt;-->
-    <!--<aop:config proxy-target-class="true">-->
-        <!--<aop:pointcut id="pointCut" expression="execution(* com.lb.service.*.*(..))"/>-->
-        <!--<aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut"/>-->
-    <!--</aop:config>-->
+    <!-- 配置事务切面 配置事务影响的类-->
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="pointCut" expression="execution(* com.lb.service.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut"/>
+    </aop:config>
+
     <!--&lt;!&ndash;httpclient配置&ndash;&gt; 1111111111111111111111111111111111111-->
     <!--<import resource="spring/bean-httpclient.xml"/>-->
     <!--&lt;!&ndash;spring rabbitmq配置&ndash;&gt;-->
