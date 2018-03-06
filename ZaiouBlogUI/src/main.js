@@ -12,7 +12,7 @@ import 'font-awesome/css/font-awesome.min.css'
 import $ from 'jquery'
 
 //将 axios 改写为 Vue 的原型属性
-Vue.prototype.$ajax = axios
+Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
 
