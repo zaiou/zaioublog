@@ -14,6 +14,13 @@ import $ from 'jquery'
 //将 axios 改写为 Vue 的原型属性
 Vue.prototype.$http = axios
 
+//引入全局过滤器
+import * as filters from './filter/index.js'  
+//注册全局过滤器
+Object.keys(filters).forEach(key => {  
+  Vue.filter(key, filters[key])  
+})  
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
